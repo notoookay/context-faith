@@ -1,0 +1,67 @@
+[project]
+name = "exp-hallucination"
+version = "0.1.0"
+readme = "README.md"
+requires-python = ">=3.11"
+dependencies = [
+    "circuitsvis @ git+https://github.com/callummcdougall/CircuitsVis.git#subdirectory=python",
+    "colorama==0.4.6",
+    "datasets>=2.21.0",
+    "einops==0.8.1",
+    "faiss-cpu>=1.10.0",
+    "ipython>=9.0.1",
+    "jaxtyping==0.2.38",
+    "jsonlines>=4.0.0",
+    "jupyter-core>=5.7.2",
+    "matplotlib==3.10.1",
+    "nbformat>=5.10.4",
+    "numpy==1.26.4",
+    "openai>=1.65.5",
+    "pip>=25.0.1",
+    "sae-lens>=5.5.2",
+    "scikit-learn==1.6.1",
+    "seaborn>=0.13.2",
+    "spacy>=3.8.4",
+    "streamlit>=1.43.0",
+    "torch==2.6.0",
+    "tqdm==4.67.1",
+    "transformer-lens>=2.15.0",
+    "transformers>=4.49.0",
+    "vllm>=0.6.6.post1",
+    "wandb>=0.19.7",
+]
+
+[dependency-groups]
+dev = [
+    "ipykernel>=6.29.5",
+]
+
+# pytorch related setups
+[tool.uv.sources]
+torch = [
+  { index = "pytorch-cu124", marker = "platform_system != 'Darwin'"},
+]
+
+[[tool.uv.index]]
+name = "pytorch-cu124"
+url = "https://download.pytorch.org/whl/cu124"
+explicit = true
+
+[[tool.uv.index]]
+name = "pytorch-cpu"
+url = "https://download.pytorch.org/whl/cpu"
+explicit = true
+
+# flash-attn related setups
+[project.optional-dependencies]
+compile = ["flash-attn==2.7.2.post1"]
+liger = ["liger-kernel>=0.5.4"]
+
+[tool.uv]
+python-preference = "only-managed"
+no-build-isolation-package = ["flash-attn"]
+
+[[tool.uv.dependency-metadata]]
+name = "flash-attn"
+version = "2.7.2.post1"
+requires-dist = ["torch", "setuptools"]
